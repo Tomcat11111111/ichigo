@@ -1,0 +1,10 @@
+# Godot
+.godot/
+*.translation
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.sw?

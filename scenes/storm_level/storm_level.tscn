@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/storm_level/environment/environment.tscn" id="1_environment"]
+[ext_resource type="PackedScene" path="res://scenes/storm_level/wreckage/wreckage.tscn" id="2_wreckage"]
+[ext_resource type="PackedScene" path="res://scenes/storm_level/player/player.tscn" id="3_player"]
+[ext_resource type="Script" path="res://scenes/storm_level/level_controller.gd" id="4_level"]
+
+[node name="StormLevel" type="Node2D"]
+
+[node name="Environment" parent="." instance=ExtResource("1_environment")]
+
+[node name="Wreckage" parent="." instance=ExtResource("2_wreckage")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LevelController" type="Node" parent="."]
+script = ExtResource("4_level")
