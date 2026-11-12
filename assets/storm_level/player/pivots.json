@@ -1,0 +1,114 @@
+{
+  "coordinate_system": "global original layout 512x768; all pivot coordinates in local PNG pixels after cropping at 2x",
+  "view": "near-frontal, mildly facing right",
+  "parts": {
+    "head": {
+      "filename": "ichigo_head.png",
+      "pivot_px": [
+        157,
+        397
+      ],
+      "size_px": [
+        336,
+        436
+      ],
+      "bbox_global_2x": [
+        351,
+        127,
+        687,
+        563
+      ],
+      "notes": "neck root, insert inside collar"
+    },
+    "coat": {
+      "filename": "ichigo_coat.png",
+      "pivot_px": [
+        230,
+        69
+      ],
+      "size_px": [
+        460,
+        553
+      ],
+      "bbox_global_2x": [
+        282,
+        503,
+        742,
+        1056
+      ],
+      "notes": "upper torso; one continuous coat with sleeves and hem"
+    },
+    "hand": {
+      "filename": "ichigo_hand.png",
+      "pivot_px": [
+        60,
+        20
+      ],
+      "size_px": [
+        132,
+        189
+      ],
+      "bbox_global_2x": [
+        270,
+        812,
+        402,
+        1001
+      ],
+      "notes": "wrist, beneath coat sleeve; flip for the other hand"
+    },
+    "upper_leg": {
+      "filename": "ichigo_upper_leg.png",
+      "pivot_px": [
+        48,
+        46
+      ],
+      "size_px": [
+        110,
+        242
+      ],
+      "bbox_global_2x": [
+        392,
+        974,
+        502,
+        1216
+      ],
+      "notes": "hip anchor, overlapped by coat hem"
+    },
+    "lower_leg": {
+      "filename": "ichigo_lower_leg.png",
+      "pivot_px": [
+        52,
+        48
+      ],
+      "size_px": [
+        100,
+        229
+      ],
+      "bbox_global_2x": [
+        396,
+        1120,
+        496,
+        1349
+      ],
+      "notes": "knee center, ball joint deliberately part of artwork"
+    },
+    "boot": {
+      "filename": "ichigo_boot.png",
+      "pivot_px": [
+        85,
+        20
+      ],
+      "size_px": [
+        204,
+        176
+      ],
+      "bbox_global_2x": [
+        361,
+        1290,
+        565,
+        1466
+      ],
+      "notes": "ankle at upper shaft; flip for opposite side"
+    }
+  }
+}

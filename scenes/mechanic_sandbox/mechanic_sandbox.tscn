@@ -5,42 +5,43 @@
 [ext_resource type="Script" path="res://scenes/mechanic_sandbox/sea.gd" id="3_sea"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
-size = Vector2(960, 80)
+size = Vector2(1800, 150)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
-size = Vector2(200, 60)
+size = Vector2(375, 112.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_deck"]
-size = Vector2(240, 20)
+size = Vector2(450, 37.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
-size = Vector2(24, 48)
+size = Vector2(45, 90)
 
 [node name="MechanicSandbox" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(480, 270)
+position = Vector2(800, 581.25)
+zoom = Vector2(0.6, 0.6)
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(0.09803922, 0.09019608, 0.07843138, 1)
-polygon = PackedVector2Array(0, 0, 960, 0, 960, 540, 0, 540)
+polygon = PackedVector2Array(-40, 80, 1840, 80, 1840, 1100, -40, 1100)
 
 [node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(480, 510)
+position = Vector2(900, 956.25)
 
 [node name="Polygon2D" type="Polygon2D" parent="Ground"]
 color = Color(0.76862746, 0.72156864, 0.627451, 1)
-polygon = PackedVector2Array(-480, -40, 480, -40, 480, 40, -480, 40)
+polygon = PackedVector2Array(-900, -75, 900, -75, 900, 75, -900, 75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
 shape = SubResource("RectangleShape2D_ground")
 
 [node name="Platform" type="StaticBody2D" parent="."]
-position = Vector2(250, 440)
+position = Vector2(468.75, 825)
 
 [node name="Polygon2D" type="Polygon2D" parent="Platform"]
 color = Color(0.76862746, 0.72156864, 0.627451, 1)
-polygon = PackedVector2Array(-100, -30, 100, -30, 100, 30, -100, 30)
+polygon = PackedVector2Array(-187.5, -56.25, 187.5, -56.25, 187.5, 56.25, -187.5, 56.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
 shape = SubResource("RectangleShape2D_platform")
@@ -50,25 +51,35 @@ script = ExtResource("3_sea")
 deck_path = NodePath("../Deck")
 
 [node name="Deck" type="AnimatableBody2D" parent="."]
-position = Vector2(510, 365)
+position = Vector2(956.25, 684.375)
 sync_to_physics = true
 script = ExtResource("1_deck")
 
 [node name="Polygon2D" type="Polygon2D" parent="Deck"]
 color = Color(0.47843137, 0.29803923, 0.1764706, 1)
-polygon = PackedVector2Array(-120, -10, 120, -10, 120, 10, -120, 10)
+polygon = PackedVector2Array(-225, -18.75, 225, -18.75, 225, 18.75, -225, 18.75)
 
 [node name="Pivot" type="Polygon2D" parent="Deck"]
 color = Color(0.08627451, 0.06666667, 0.050980393, 1)
-polygon = PackedVector2Array(-3, -16, 3, -16, 3, 16, -3, 16)
+polygon = PackedVector2Array(-5.625, -30, 5.625, -30, 5.625, 30, -5.625, 30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deck"]
 shape = SubResource("RectangleShape2D_deck")
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(72, 462)
+position = Vector2(135, 866.25)
 script = ExtResource("2_player")
+sea_path = NodePath("../Sea")
+camera_path = NodePath("../Camera2D")
+
+[node name="Body" type="Polygon2D" parent="Player"]
+color = Color(0.9490196, 0.78039217, 0.63529414, 1)
+polygon = PackedVector2Array(-22.5, -90, 22.5, -90, 22.5, 0, -22.5, 0)
+
+[node name="Up" type="Polygon2D" parent="Player"]
+color = Color(0.08627451, 0.06666667, 0.050980393, 1)
+polygon = PackedVector2Array(-11.25, -90, 11.25, -90, 11.25, -75, -11.25, -75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, -24)
+position = Vector2(0, -45)
 shape = SubResource("RectangleShape2D_player")
