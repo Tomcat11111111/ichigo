@@ -4,12 +4,14 @@ extends CharacterBody2D
 # enlarged deck and platforms stay reachable. Change only after a playtest.
 const LEVEL_SCALE := 90.0 / 48.0
 const SPEED := 180.0 * LEVEL_SCALE
+# The design doc binds no sprint cap. 300 px/s is the previous sandbox value.
+const SPRINT_SPEED := 300.0 * LEVEL_SCALE
 const JUMP_SPEED := 420.0 * LEVEL_SCALE
 const GRAVITY := 1200.0 * LEVEL_SCALE
 const SLIDE_ANGLE := deg_to_rad(12.0)
 const FLOOR_BIAS := 40.0 * LEVEL_SCALE
 const LEVEL_LEFT := 0.0
-const LEVEL_RIGHT := 1800.0
+const LEVEL_RIGHT := 3760.0
 # Top of the 90px body rectangle. Feet stay at the origin.
 const HEAD_LOCAL := Vector2(0, -90)
 const Sea := preload("res://scenes/mechanic_sandbox/sea.gd")
@@ -20,11 +22,13 @@ const Sea := preload("res://scenes/mechanic_sandbox/sea.gd")
 var _slide_speed := 0.0
 var _sea: Sea
 var _camera: Camera2D
+var _visual: Node2D
 var _drowned := false
 
 
 func _ready() -> void:
 	floor_snap_length = 12.0 * LEVEL_SCALE
+	_visual = get_node_or_null("Visual") as Node2D
 	if not sea_path.is_empty():
 		_sea = get_node(sea_path) as Sea
 	if not camera_path.is_empty():
@@ -34,6 +38,7 @@ func _ready() -> void:
 	_bind_key(&"move_right", KEY_D)
 	_bind_key(&"move_right", KEY_RIGHT)
 	_bind_key(&"jump", KEY_SPACE)
+	_bind_key(&"sprint", KEY_SHIFT)
 
 
 func _physics_process(delta: float) -> void:
@@ -43,7 +48,7 @@ func _physics_process(delta: float) -> void:
 
 	if jumping:
 		_slide_speed = 0.0
-		velocity = Vector2(input_x * SPEED, -JUMP_SPEED)
+		velocity = Vector2(input_x * _move_speed(), -JUMP_SPEED)
 		rotation = deck.rotation if deck != null else 0.0
 	elif deck != null:
 		rotation = deck.rotation
@@ -51,13 +56,14 @@ func _physics_process(delta: float) -> void:
 	elif is_on_floor():
 		rotation = 0.0
 		_slide_speed = 0.0
-		velocity = Vector2(input_x * SPEED, 0.0)
+		velocity = Vector2(input_x * _move_speed(), 0.0)
 	else:
 		rotation = 0.0
 		_slide_speed = 0.0
-		velocity.x = input_x * SPEED
+		velocity.x = input_x * _move_speed()
 		velocity.y += GRAVITY * delta
 
+	_face(input_x)
 	move_and_slide()
 	_follow_player()
 	if _head_is_underwater():
@@ -67,7 +73,7 @@ func _physics_process(delta: float) -> void:
 
 func _apply_deck_motion(surface_angle: float, input_x: float, delta: float) -> void:
 	var tangent := Vector2.RIGHT.rotated(surface_angle)
-	var control := tangent * input_x * SPEED
+	var control := tangent * input_x * _move_speed()
 	if abs(surface_angle) > SLIDE_ANGLE:
 		var downhill := tangent if tangent.dot(Vector2.DOWN) > 0.0 else -tangent
 		_slide_speed += GRAVITY * sin(abs(surface_angle)) * delta
@@ -76,6 +82,20 @@ func _apply_deck_motion(surface_angle: float, input_x: float, delta: float) -> v
 		_slide_speed = 0.0
 		velocity = control
 	velocity -= Vector2.UP.rotated(surface_angle) * FLOOR_BIAS
+
+
+func _face(input_x: float) -> void:
+	if _visual == null or input_x == 0.0:
+		return
+	var magnitude := absf(_visual.scale.x)
+	# Unflipped parts point to the right.
+	_visual.scale.x = magnitude if input_x > 0.0 else -magnitude
+
+
+func _move_speed() -> float:
+	if Input.is_action_pressed(&"sprint"):
+		return SPRINT_SPEED
+	return SPEED
 
 
 func _follow_player() -> void:

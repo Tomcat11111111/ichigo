@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scenes/mechanic_sandbox/deck.gd" id="1_deck"]
 [ext_resource type="Script" path="res://scenes/mechanic_sandbox/player.gd" id="2_player"]
 [ext_resource type="Script" path="res://scenes/mechanic_sandbox/sea.gd" id="3_sea"]
+[ext_resource type="Script" path="res://scenes/mechanic_sandbox/distant_layer.gd" id="4_distant"]
+[ext_resource type="Script" path="res://scenes/mechanic_sandbox/rain.gd" id="5_rain"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(1800, 150)
@@ -20,17 +22,121 @@ size = Vector2(45, 90)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(800, 581.25)
-zoom = Vector2(0.6, 0.6)
+zoom = Vector2(0.72, 0.72)
 
-[node name="Background" type="Polygon2D" parent="."]
-color = Color(0.09803922, 0.09019608, 0.07843138, 1)
-polygon = PackedVector2Array(-40, 80, 1840, 80, 1840, 1100, -40, 1100)
+[node name="Sky" type="Polygon2D" parent="."]
+color = Color(0.17, 0.21, 0.27, 1)
+polygon = PackedVector2Array(-400, -200, 4600, -200, 4600, 1100, -400, 1100)
+
+[node name="Horizon" type="Polygon2D" parent="."]
+color = Color(0.3, 0.35, 0.42, 1)
+polygon = PackedVector2Array(-400, 520, 4600, 520, 4600, 780, -400, 780)
+
+[node name="Mountains" type="Node2D" parent="."]
+script = ExtResource("4_distant")
+camera_path = NodePath("../Camera2D")
+follow = 0.25
+
+[node name="Peak1" type="Polygon2D" parent="Mountains"]
+color = Color(0.22, 0.26, 0.32, 1)
+polygon = PackedVector2Array(-200, 740, 200, 470, 700, 740)
+
+[node name="Peak2" type="Polygon2D" parent="Mountains"]
+color = Color(0.2, 0.24, 0.3, 1)
+polygon = PackedVector2Array(500, 740, 1100, 390, 1700, 740)
+
+[node name="Peak3" type="Polygon2D" parent="Mountains"]
+color = Color(0.23, 0.27, 0.33, 1)
+polygon = PackedVector2Array(1500, 740, 2100, 440, 2700, 740)
+
+[node name="Peak4" type="Polygon2D" parent="Mountains"]
+color = Color(0.2, 0.24, 0.3, 1)
+polygon = PackedVector2Array(2400, 740, 3100, 360, 3800, 740)
+
+[node name="Peak5" type="Polygon2D" parent="Mountains"]
+color = Color(0.22, 0.26, 0.32, 1)
+polygon = PackedVector2Array(3500, 740, 4100, 480, 4700, 740)
+
+[node name="FarWrecks" type="Node2D" parent="."]
+script = ExtResource("4_distant")
+camera_path = NodePath("../Camera2D")
+follow = 0.5
+
+[node name="HullA" type="Polygon2D" parent="FarWrecks"]
+color = Color(0.12, 0.14, 0.18, 1)
+polygon = PackedVector2Array(180, 760, 420, 560, 760, 760)
+
+[node name="HullB" type="Polygon2D" parent="FarWrecks"]
+color = Color(0.11, 0.13, 0.17, 1)
+polygon = PackedVector2Array(980, 770, 1400, 500, 1860, 770)
+
+[node name="HullC" type="Polygon2D" parent="FarWrecks"]
+color = Color(0.12, 0.14, 0.18, 1)
+polygon = PackedVector2Array(2100, 770, 2580, 470, 3100, 770)
+
+[node name="HullD" type="Polygon2D" parent="FarWrecks"]
+color = Color(0.11, 0.13, 0.17, 1)
+polygon = PackedVector2Array(3200, 770, 3600, 520, 4080, 770)
+
+[node name="Wrecks" type="Node2D" parent="."]
+
+[node name="LeftRuin" type="Polygon2D" parent="Wrecks"]
+color = Color(0.04, 0.05, 0.07, 1)
+polygon = PackedVector2Array(220, 860, 300, 600, 460, 860)
+
+[node name="LeftPost" type="Polygon2D" parent="Wrecks"]
+color = Color(0.03, 0.04, 0.06, 1)
+polygon = PackedVector2Array(300, 860, 312, 860, 312, 480, 300, 480)
+
+[node name="LeftMass" type="Polygon2D" parent="Wrecks"]
+color = Color(0.04, 0.05, 0.07, 1)
+polygon = PackedVector2Array(360, 870, 430, 540, 640, 870)
+
+[node name="Pier" type="Polygon2D" parent="Wrecks"]
+color = Color(0.035, 0.04, 0.055, 1)
+polygon = PackedVector2Array(700, 760, 760, 640, 1180, 640, 1260, 760)
+
+[node name="PierPeak" type="Polygon2D" parent="Wrecks"]
+color = Color(0.03, 0.035, 0.05, 1)
+polygon = PackedVector2Array(1040, 660, 1180, 390, 1340, 680)
+
+[node name="PileA" type="Polygon2D" parent="Wrecks"]
+color = Color(0.025, 0.03, 0.04, 1)
+polygon = PackedVector2Array(860, 700, 872, 700, 872, 400, 860, 400)
+
+[node name="PileB" type="Polygon2D" parent="Wrecks"]
+color = Color(0.025, 0.03, 0.04, 1)
+polygon = PackedVector2Array(980, 690, 994, 690, 994, 460, 980, 460)
+
+[node name="Hull" type="Polygon2D" parent="Wrecks"]
+color = Color(0.03, 0.035, 0.05, 1)
+polygon = PackedVector2Array(1360, 760, 1480, 640, 1680, 620, 1840, 280, 1980, 460, 2040, 760)
+
+[node name="HullPost" type="Polygon2D" parent="Wrecks"]
+color = Color(0.025, 0.03, 0.04, 1)
+polygon = PackedVector2Array(1768, 520, 1782, 520, 1782, 250, 1768, 250)
+
+[node name="Collapse" type="Polygon2D" parent="Wrecks"]
+color = Color(0.035, 0.04, 0.055, 1)
+polygon = PackedVector2Array(2060, 760, 2160, 560, 2460, 520, 2620, 760)
+
+[node name="CollapsePeak" type="Polygon2D" parent="Wrecks"]
+color = Color(0.03, 0.035, 0.05, 1)
+polygon = PackedVector2Array(2320, 560, 2480, 340, 2640, 620)
+
+[node name="Stern" type="Polygon2D" parent="Wrecks"]
+color = Color(0.035, 0.04, 0.055, 1)
+polygon = PackedVector2Array(2860, 760, 2960, 640, 3320, 640, 3420, 760)
+
+[node name="SternPeak" type="Polygon2D" parent="Wrecks"]
+color = Color(0.03, 0.035, 0.05, 1)
+polygon = PackedVector2Array(3000, 650, 3160, 280, 3320, 650)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(900, 956.25)
 
 [node name="Polygon2D" type="Polygon2D" parent="Ground"]
-color = Color(0.76862746, 0.72156864, 0.627451, 1)
+color = Color(0.07, 0.08, 0.09, 1)
 polygon = PackedVector2Array(-900, -75, 900, -75, 900, 75, -900, 75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
@@ -40,7 +146,7 @@ shape = SubResource("RectangleShape2D_ground")
 position = Vector2(468.75, 825)
 
 [node name="Polygon2D" type="Polygon2D" parent="Platform"]
-color = Color(0.76862746, 0.72156864, 0.627451, 1)
+color = Color(0.16, 0.15, 0.14, 1)
 polygon = PackedVector2Array(-187.5, -56.25, 187.5, -56.25, 187.5, 56.25, -187.5, 56.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
@@ -50,13 +156,20 @@ shape = SubResource("RectangleShape2D_platform")
 script = ExtResource("3_sea")
 deck_path = NodePath("../Deck")
 
+[node name="Crest" type="Line2D" parent="Sea"]
+width = 10.0
+default_color = Color(0.62, 0.72, 0.74, 0.45)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
 [node name="Deck" type="AnimatableBody2D" parent="."]
 position = Vector2(956.25, 684.375)
 sync_to_physics = true
 script = ExtResource("1_deck")
 
 [node name="Polygon2D" type="Polygon2D" parent="Deck"]
-color = Color(0.47843137, 0.29803923, 0.1764706, 1)
+color = Color(0.24, 0.18, 0.14, 1)
 polygon = PackedVector2Array(-225, -18.75, 225, -18.75, 225, 18.75, -225, 18.75)
 
 [node name="Pivot" type="Polygon2D" parent="Deck"]
@@ -66,19 +179,83 @@ polygon = PackedVector2Array(-5.625, -30, 5.625, -30, 5.625, 30, -5.625, 30)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deck"]
 shape = SubResource("RectangleShape2D_deck")
 
+[node name="Deck2" type="AnimatableBody2D" parent="."]
+position = Vector2(1586.25, 684.375)
+sync_to_physics = true
+script = ExtResource("1_deck")
+phase_offset = 3.141592653589793
+
+[node name="Polygon2D" type="Polygon2D" parent="Deck2"]
+color = Color(0.24, 0.18, 0.14, 1)
+polygon = PackedVector2Array(-225, -18.75, 225, -18.75, 225, 18.75, -225, 18.75)
+
+[node name="Pivot" type="Polygon2D" parent="Deck2"]
+color = Color(0.08627451, 0.06666667, 0.050980393, 1)
+polygon = PackedVector2Array(-5.625, -30, 5.625, -30, 5.625, 30, -5.625, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck2"]
+shape = SubResource("RectangleShape2D_deck")
+
+[node name="Deck3" type="AnimatableBody2D" parent="."]
+position = Vector2(2306.25, 684.375)
+sync_to_physics = true
+script = ExtResource("1_deck")
+
+[node name="Polygon2D" type="Polygon2D" parent="Deck3"]
+color = Color(0.24, 0.18, 0.14, 1)
+polygon = PackedVector2Array(-225, -18.75, 225, -18.75, 225, 18.75, -225, 18.75)
+
+[node name="Pivot" type="Polygon2D" parent="Deck3"]
+color = Color(0.08627451, 0.06666667, 0.050980393, 1)
+polygon = PackedVector2Array(-5.625, -30, 5.625, -30, 5.625, 30, -5.625, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck3"]
+shape = SubResource("RectangleShape2D_deck")
+
+[node name="Deck4" type="AnimatableBody2D" parent="."]
+position = Vector2(3116.25, 684.375)
+sync_to_physics = true
+script = ExtResource("1_deck")
+phase_offset = 3.141592653589793
+
+[node name="Polygon2D" type="Polygon2D" parent="Deck4"]
+color = Color(0.24, 0.18, 0.14, 1)
+polygon = PackedVector2Array(-225, -18.75, 225, -18.75, 225, 18.75, -225, 18.75)
+
+[node name="Pivot" type="Polygon2D" parent="Deck4"]
+color = Color(0.08627451, 0.06666667, 0.050980393, 1)
+polygon = PackedVector2Array(-5.625, -30, 5.625, -30, 5.625, 30, -5.625, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck4"]
+shape = SubResource("RectangleShape2D_deck")
+
+[node name="Rain" type="Node2D" parent="."]
+script = ExtResource("5_rain")
+camera_path = NodePath("../Camera2D")
+
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(135, 866.25)
 script = ExtResource("2_player")
 sea_path = NodePath("../Sea")
 camera_path = NodePath("../Camera2D")
 
-[node name="Body" type="Polygon2D" parent="Player"]
-color = Color(0.9490196, 0.78039217, 0.63529414, 1)
-polygon = PackedVector2Array(-22.5, -90, 22.5, -90, 22.5, 0, -22.5, 0)
+[node name="Visual" type="Node2D" parent="Player"]
 
-[node name="Up" type="Polygon2D" parent="Player"]
-color = Color(0.08627451, 0.06666667, 0.050980393, 1)
-polygon = PackedVector2Array(-11.25, -90, 11.25, -90, 11.25, -75, -11.25, -75)
+[node name="LegL" type="Polygon2D" parent="Player/Visual"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-8, -36, -1, -36, -1, 0, -7, 0)
+
+[node name="LegR" type="Polygon2D" parent="Player/Visual"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1, -36, 7, -36, 11, 0, 2, 0)
+
+[node name="Coat" type="Polygon2D" parent="Player/Visual"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-14, -72, 12, -72, 16, -40, 11, -32, -10, -32, -15, -46)
+
+[node name="Head" type="Polygon2D" parent="Player/Visual"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7, -74, -2, -90, 8, -88, 11, -78, 7, -68, -6, -68, -9, -74)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, -45)

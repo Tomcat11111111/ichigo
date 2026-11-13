@@ -5,7 +5,13 @@ extends AnimatableBody2D
 const PERIOD := 4.0
 const MAX_ANGLE := deg_to_rad(15.0)
 
+@export var phase_offset := 0.0
+
 var phase := 0.0
+
+
+func _ready() -> void:
+	phase = phase_offset
 
 
 func _physics_process(delta: float) -> void:
